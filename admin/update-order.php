@@ -8,16 +8,16 @@
 
         <?php 
         
-            //CHeck whether id is set or not
+            //Kiểm tra xem id đã được đặt hay chưa
             if(isset($_GET['id']))
             {
                 //GEt the Order Details
                 $id=$_GET['id'];
 
-                //Get all other details based on this id
-                //SQL Query to get the order details
+                //Nhận tất cả các chi tiết khác dựa trên id này
+                //Truy vấn SQL để lấy chi tiết đơn hàng
                 $sql = "SELECT * FROM tbl_order WHERE id=$id";
-                //Execute Query
+                //Thực hiện kiểm tra
                 $res = mysqli_query($conn, $sql);
                 //Count Rows
                 $count = mysqli_num_rows($res);
@@ -38,14 +38,14 @@
                 }
                 else
                 {
-                    //DEtail not Available/
-                    //Redirect to Manage Order
+                    //DEtail không có sẵn/
+                    //Chuyển hướng sang Quản lý Đơn hàng
                     header('location:'.SITEURL.'admin/manage-order.php');
                 }
             }
             else
             {
-                //REdirect to Manage ORder PAge
+                //REdirect để quản lý ORder PAge
                 header('location:'.SITEURL.'admin/manage-order.php');
             }
         
@@ -127,11 +127,11 @@
 
 
         <?php 
-            //CHeck whether Update Button is Clicked or Not
+            //Kiểm tra xem nút cập nhật có được nhấp hay không
             if(isset($_POST['submit']))
             {
                 //echo "Clicked";
-                //Get All the Values from Form
+                //Nhận tất cả các giá trị từ Form
                 $id = $_POST['id'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
@@ -160,8 +160,8 @@
                 //Execute the Query
                 $res2 = mysqli_query($conn, $sql2);
 
-                //CHeck whether update or not
-                //And REdirect to Manage Order with Message
+                //Kiểm tra xem có cập nhật hay không
+                //Và sửa lại để quản lý đơn hàng bằng tin nhắn
                 if($res2==true)
                 {
                     //Updated

@@ -1,13 +1,13 @@
 <?php 
 
-    //AUthorization - Access COntrol
-    //CHeck whether the user is logged in or not
-    if(!isset($_SESSION['user'])) //IF user session is not set
+    //Ủy quyền - Truy cập COntrol
+    //Kiểm tra xem người dùng đã đăng nhập hay chưa
+    if(!isset($_SESSION['user'])) 
     {
-        //User is not logged in
-        //REdirect to login page with message
+        //Người dùng chưa đăng nhập
+        //Sửa lại trang đăng nhập bằng tin nhắn
         $_SESSION['no-login-message'] = "<div class='error text-center'>Please login to access Admin Panel.</div>";
-        //REdirect to Login Page
+        //Sửa lại trang đăng nhập
         header('location:'.SITEURL.'admin/login.php');
     }
 

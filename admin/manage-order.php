@@ -32,21 +32,21 @@
                     </tr>
 
                     <?php 
-                        //Get all the orders from database
-                        $sql = "SELECT * FROM tbl_order ORDER BY id DESC"; // DIsplay the Latest Order at First
-                        //Execute Query
+                        //Nhận tất cả các đơn đặt hàng từ cơ sở dữ liệu
+                        $sql = "SELECT * FROM tbl_order ORDER BY id DESC"; //DIsplay Đơn đặt hàng mới nhất ở đầu tiên
+                        //Thực hiện kiểm tra
                         $res = mysqli_query($conn, $sql);
-                        //Count the Rows
+                        //Đếm hàng
                         $count = mysqli_num_rows($res);
 
-                        $sn = 1; //Create a Serial Number and set its initail value as 1
+                        $sn = 1; //Tạo Số sê-ri và đặt giá trị initail của nó là 1
 
                         if($count>0)
                         {
-                            //Order Available
+                            //Đơn hàng có sẵn
                             while($row=mysqli_fetch_assoc($res))
                             {
-                                //Get all the order details
+                                //Nhận tất cả các chi tiết đặt hàng
                                 $id = $row['id'];
                                 $food = $row['food'];
                                 $price = $row['price'];
@@ -71,7 +71,7 @@
 
                                         <td>
                                             <?php 
-                                                // Ordered, On Delivery, Delivered, Cancelled
+                                                // Đã đặt hàng, Đang giao hàng, Đã giao, Đã hủy
 
                                                 if($status=="Ordered")
                                                 {
@@ -107,7 +107,7 @@
                         }
                         else
                         {
-                            //Order not Available
+                            //Đơn hàng không có sẵn
                             echo "<tr><td colspan='12' class='error'>Orders not Available</td></tr>";
                         }
                     ?>

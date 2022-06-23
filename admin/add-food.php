@@ -124,26 +124,26 @@
         
         <?php 
 
-            //CHeck whether the button is clicked or not
+            //Kiểm tra xem nút có được nhấp hay không
             if(isset($_POST['submit']))
             {
-                //Add the Food in Database
+                //Thêm thực phẩm vào cơ sở dữ liệu
                 //echo "Clicked";
                 
-                //1. Get the DAta from Form
+                //1. Nhận DAta từ Biểu mẫu
                 $title = $_POST['title'];
                 $description = $_POST['description'];
                 $price = $_POST['price'];
                 $category = $_POST['category'];
 
-                //Check whether radion button for featured and active are checked or not
+                //Kiểm tra xem nút radion cho tính năng và hoạt động có được chọn hay không
                 if(isset($_POST['featured']))
                 {
                     $featured = $_POST['featured'];
                 }
                 else
                 {
-                    $featured = "No"; //SEtting the Default Value
+                    $featured = "No"; //Ghi giá trị mặc định
                 }
 
                 if(isset($_POST['active']))
@@ -152,44 +152,44 @@
                 }
                 else
                 {
-                    $active = "No"; //Setting Default Value
+                    $active = "No"; //Đặt giá trị mặc định
                 }
 
-                //2. Upload the Image if selected
-                //Check whether the select image is clicked or not and upload the image only if the image is selected
+                //2. Tải lên hình ảnh nếu được chọn
+                //Kiểm tra xem hình ảnh đã chọn có được nhấp vào hay không và chỉ tải hình ảnh lên nếu hình ảnh được chọn
                 if(isset($_FILES['image']['name']))
                 {
-                    //Get the details of the selected image
+                    //Nhận thông tin chi tiết của hình ảnh đã chọn
                     $image_name = $_FILES['image']['name'];
 
-                    //Check Whether the Image is Selected or not and upload image only if selected
+                    //Kiểm tra xem hình ảnh có được chọn hay không và chỉ tải lên hình ảnh nếu được chọn
                     if($image_name!="")
                     {
-                        // Image is SElected
-                        //A. REnamge the Image
-                        //Get the extension of selected image (jpg, png, gif, etc.) "vijay-thapa.jpg" vijay-thapa jpg
+                        // Hình ảnh được chọn lọc
+                        //A. Đổi tên hình ảnh
+                        //Nhận phần mở rộng của hình ảnh đã chọn (jpg, png, gif, v.v.) "vijay-thapa.jpg" vijay-thapa jpg
                         $ext = end(explode('.', $image_name));
 
-                        // Create New Name for Image
+                        // Tạo tên mới cho hình ảnh
                         $image_name = "Food-Name-".rand(0000,9999).".".$ext; //New Image Name May Be "Food-Name-657.jpg"
 
-                        //B. Upload the Image
-                        //Get the Src Path and DEstinaton path
+                        //B. Tải lên hình ảnh
+                        //Nhận đường dẫn Src và đường dẫn DEstinaton
 
-                        // Source path is the current location of the image
+                        // Đường dẫn nguồn là vị trí hiện tại của hình ảnh
                         $src = $_FILES['image']['tmp_name'];
 
-                        //Destination Path for the image to be uploaded
+                        //Đường dẫn đích cho hình ảnh được tải lên
                         $dst = "../images/food/".$image_name;
 
-                        //Finally Uppload the food image
+                        // Uppload the food image
                         $upload = move_uploaded_file($src, $dst);
 
-                        //check whether image uploaded of not
+                        //kiểm tra xem hình ảnh có được tải lên không
                         if($upload==false)
                         {
-                            //Failed to Upload the image
-                            //REdirect to Add Food Page with Error Message
+                            //Không tải lên được hình ảnh
+                            //Sửa lại để Thêm Trang Thực phẩm có Thông báo Lỗi
                             $_SESSION['upload'] = "<div class='error'>Failed to Upload Image.</div>";
                             header('location:'.SITEURL.'admin/add-food.php');
                             //STop the process
@@ -201,13 +201,13 @@
                 }
                 else
                 {
-                    $image_name = ""; //SEtting DEfault Value as blank
+                    $image_name = ""; //GỬI Giá trị mặc định là trống
                 }
 
-                //3. Insert Into Database
+                //3. Chèn vào cơ sở dữ liệu
 
-                //Create a SQL Query to Save or Add food
-                // For Numerical we do not need to pass value inside quotes '' But for string value it is compulsory to add quotes ''
+                //Tạo truy vấn SQL để lưu hoặc thêm thức ăn
+                // Đối với Numerical, chúng ta không cần phải chuyển giá trị vào bên trong dấu ngoặc kép '' Nhưng đối với giá trị chuỗi thì bắt buộc phải thêm dấu ngoặc kép ''
                 $sql2 = "INSERT INTO tbl_food SET 
                     title = '$title',
                     description = '$description',
@@ -218,20 +218,20 @@
                     active = '$active'
                 ";
 
-                //Execute the Query
+                //Thực thi truy vấn
                 $res2 = mysqli_query($conn, $sql2);
 
-                //CHeck whether data inserted or not
-                //4. Redirect with MEssage to Manage Food page
+                //Kiểm tra xem dữ liệu đã được chèn hay chưa
+                //4. Chuyển hướng với MEssage đến trang Quản lý thực phẩm
                 if($res2 == true)
                 {
-                    //Data inserted Successfullly
+                    //Đã chèn dữ liệu thành công
                     $_SESSION['add'] = "<div class='success'>Food Added Successfully.</div>";
                     header('location:'.SITEURL.'admin/manage-food.php');
                 }
                 else
                 {
-                    //FAiled to Insert Data
+                    //FAiled để chèn dữ liệu
                     $_SESSION['add'] = "<div class='error'>Failed to Add Food.</div>";
                     header('location:'.SITEURL.'admin/manage-food.php');
                 }

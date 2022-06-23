@@ -7,24 +7,24 @@
         <br><br>
 
         <?php 
-            //1. Get the ID of Selected Admin
+            //1. Lấy ID của quản trị viên đã chọn
             $id=$_GET['id'];
 
-            //2. Create SQL Query to Get the Details
+            //2. Tạo truy vấn SQL để lấy thông tin chi tiết
             $sql="SELECT * FROM tbl_admin WHERE id=$id";
 
-            //Execute the Query
+            //Thực thi truy vấn
             $res=mysqli_query($conn, $sql);
 
-            //Check whether the query is executed or not
+            //Kiểm tra xem truy vấn có được thực thi hay không
             if($res==true)
             {
-                // Check whether the data is available or not
+                // Kiểm tra xem dữ liệu có sẵn hay không
                 $count = mysqli_num_rows($res);
-                //Check whether we have admin data or not
+                //Kiểm tra xem  có dữ liệu quản trị viên hay không
                 if($count==1)
                 {
-                    // Get the Details
+                    // Nhận thông tin chi tiết
                     //echo "Admin Available";
                     $row=mysqli_fetch_assoc($res);
 
@@ -33,7 +33,7 @@
                 }
                 else
                 {
-                    //Redirect to Manage Admin PAge
+                    //Chuyển hướng sang Quản lý PAge quản trị viên
                     header('location:'.SITEURL.'admin/manage-admin.php');
                 }
             }
@@ -73,38 +73,38 @@
 
 <?php 
 
-    //Check whether the Submit Button is Clicked or not
+    //Kiểm tra xem nút Gửi có được nhấp vào hay không
     if(isset($_POST['submit']))
     {
         //echo "Button CLicked";
-        //Get all the values from form to update
+        //Nhận tất cả các giá trị từ biểu mẫu để cập nhật
         $id = $_POST['id'];
         $full_name = $_POST['full_name'];
         $username = $_POST['username'];
 
-        //Create a SQL Query to Update Admin
+        //Tạo truy vấn SQL để cập nhật quản trị viên
         $sql = "UPDATE tbl_admin SET
         full_name = '$full_name',
         username = '$username' 
         WHERE id='$id'
         ";
 
-        //Execute the Query
+        //Thực thi truy vấn
         $res = mysqli_query($conn, $sql);
 
-        //Check whether the query executed successfully or not
+        //Kiểm tra xem truy vấn có được thực thi thành công hay không
         if($res==true)
         {
-            //Query Executed and Admin Updated
+            //Truy vấn được thực thi và được quản trị viên cập nhật
             $_SESSION['update'] = "<div class='success'>Admin Updated Successfully.</div>";
-            //Redirect to Manage Admin Page
+            //Chuyển hướng đến Quản lý Trang quản trị
             header('location:'.SITEURL.'admin/manage-admin.php');
         }
         else
         {
-            //Failed to Update Admin
+            //Không cập nhật được quản trị viên
             $_SESSION['update'] = "<div class='error'>Failed to Delete Admin.</div>";
-            //Redirect to Manage Admin Page
+            //Chuyển hướng đến Quản lý Trang quản trị
             header('location:'.SITEURL.'admin/manage-admin.php');
         }
     }

@@ -3,54 +3,54 @@
     include('../config/constants.php');
 
     //echo "Delete Page";
-    //Check whether the id and image_name value is set or not
+    //Kiểm tra xem giá trị id và image_name đã được đặt hay chưa
     if(isset($_GET['id']) AND isset($_GET['image_name']))
     {
-        //Get the Value and Delete
-        //echo "Get Value and Delete";
+        //Nhận giá trị và xóa
+        //echo "Nhận giá trị và xóa";
         $id = $_GET['id'];
         $image_name = $_GET['image_name'];
 
-        //Remove the physical image file is available
+        //Xóa tệp hình ảnh  có sẵn
         if($image_name != "")
         {
-            //Image is Available. So remove it
+            //Hình ảnh có sẵn. Vì vậy, loại bỏ nó
             $path = "../images/category/".$image_name;
-            //REmove the Image
+            //Di chuyển lại hình ảnh
             $remove = unlink($path);
 
-            //IF failed to remove image then add an error message and stop the process
+            //NẾU không xóa được hình ảnh thì hãy thêm thông báo lỗi và dừng quá trình
             if($remove==false)
             {
-                //Set the SEssion Message
+                //Đặt thông điệp SEssion
                 $_SESSION['remove'] = "<div class='error'>Failed to Remove Category Image.</div>";
-                //REdirect to Manage Category page
+                //Sửa lại để quản lý trang Danh mục
                 header('location:'.SITEURL.'admin/manage-category.php');
                 //Stop the Process
                 die();
             }
         }
 
-        //Delete Data from Database
-        //SQL Query to Delete Data from Database
+        //Xóa dữ liệu khỏi cơ sở dữ liệu
+        //Truy vấn SQL để xóa dữ liệu khỏi cơ sở dữ liệu
         $sql = "DELETE FROM tbl_category WHERE id=$id";
 
-        //Execute the Query
+        // Thực thi truy vấn
         $res = mysqli_query($conn, $sql);
 
-        //Check whether the data is delete from database or not
+        // Kiểm tra xem dữ liệu có bị xóa khỏi cơ sở dữ liệu hay không
         if($res==true)
         {
-            //SEt Success MEssage and REdirect
+            
             $_SESSION['delete'] = "<div class='success'>Category Deleted Successfully.</div>";
-            //Redirect to Manage Category
+            //Chuyển hướng sang Quản lý danh mục
             header('location:'.SITEURL.'admin/manage-category.php');
         }
         else
         {
-            //SEt Fail MEssage and Redirecs
+           
             $_SESSION['delete'] = "<div class='error'>Failed to Delete Category.</div>";
-            //Redirect to Manage Category
+            //Chuyển hướng sang Quản lý danh mục
             header('location:'.SITEURL.'admin/manage-category.php');
         }
 
@@ -59,7 +59,7 @@
     }
     else
     {
-        //redirect to Manage Category Page
+        //chuyển hướng đến Quản lý Trang Danh mục
         header('location:'.SITEURL.'admin/manage-category.php');
     }
 ?>

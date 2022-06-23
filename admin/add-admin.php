@@ -7,10 +7,10 @@
         <br><br>
 
         <?php 
-            if(isset($_SESSION['add'])) //Checking whether the SEssion is Set of Not
+            if(isset($_SESSION['add'])) //Kiểm tra xem SEssion có phải là Set of Not không
             {
-                echo $_SESSION['add']; //Display the SEssion Message if SEt
-                unset($_SESSION['add']); //Remove Session Message
+                echo $_SESSION['add']; //Hiển thị Thông báo SEssion nếu SEt
+                unset($_SESSION['add']); //Xóa thông báo phiên
             }
         ?>
 
@@ -56,47 +56,47 @@
 
 
 <?php 
-    //Process the Value from Form and Save it in Database
+    //Xử lý giá trị từ biểu mẫu và lưu nó trong cơ sở dữ liệu
 
-    //Check whether the submit button is clicked or not
+    //Kiểm tra xem nút gửi có được nhấp hay không
 
     if(isset($_POST['submit']))
     {
         // Button Clicked
         //echo "Button Clicked";
 
-        //1. Get the Data from form
+        //1. Lấy dữ liệu từ form
         $full_name = $_POST['full_name'];
         $username = $_POST['username'];
-        $password = md5($_POST['password']); //Password Encryption with MD5
+        $password = md5($_POST['password']); //Mã hóa mật khẩu với MD5
 
-        //2. SQL Query to Save the data into database
+        //2. Truy vấn SQL để lưu dữ liệu vào cơ sở dữ liệu
         $sql = "INSERT INTO tbl_admin SET 
             full_name='$full_name',
             username='$username',
             password='$password'
         ";
  
-        //3. Executing Query and Saving Data into Datbase
+        //3. Thực thi truy vấn và lưu dữ liệu vào Datbase
         $res = mysqli_query($conn, $sql) or die(mysqli_error());
 
-        //4. Check whether the (Query is Executed) data is inserted or not and display appropriate message
+        //4. Kiểm tra xem dữ liệu (Truy vấn được thực thi) đã được chèn hay chưa và hiển thị thông báo thích hợp
         if($res==TRUE)
         {
             //Data Inserted
             //echo "Data Inserted";
-            //Create a Session Variable to Display Message
+            //Tạo một biến phiên để hiển thị thông báo
             $_SESSION['add'] = "<div class='success'>Admin Added Successfully.</div>";
-            //Redirect Page to Manage Admin
+            //Chuyển hướng Trang đến Quản lý Quản trị viên
             header("location:".SITEURL.'admin/manage-admin.php');
         }
         else
         {
             //FAiled to Insert DAta
             //echo "Faile to Insert Data";
-            //Create a Session Variable to Display Message
+            //Tạo một biến phiên để hiển thị thông báo
             $_SESSION['add'] = "<div class='error'>Failed to Add Admin.</div>";
-            //Redirect Page to Add Admin
+            //Chuyển hướng trang để thêm quản trị viên
             header("location:".SITEURL.'admin/add-admin.php');
         }
 

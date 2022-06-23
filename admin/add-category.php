@@ -71,23 +71,23 @@
 
         <?php 
         
-            //CHeck whether the Submit Button is Clicked or Not
+            //Kiểm tra xem nút gửi có được nhấp hay không
             if(isset($_POST['submit']))
             {
                 //echo "Clicked";
 
-                //1. Get the Value from CAtegory Form
+                //1. lấu Giá trị từ form 
                 $title = $_POST['title'];
 
-                //For Radio input, we need to check whether the button is selected or not
+                //Đối với đầu vào Radio, chúng ta cần kiểm tra xem nút đã được chọn hay chưa
                 if(isset($_POST['featured']))
                 {
-                    //Get the VAlue from form
+                    //Lấy dữ liệu từ form
                     $featured = $_POST['featured'];
                 }
                 else
                 {
-                    //SEt the Default VAlue
+                    //SEt the VAlue mặc định
                     $featured = "No";
                 }
 
@@ -100,26 +100,26 @@
                     $active = "No";
                 }
 
-                //Check whether the image is selected or not and set the value for image name accoridingly
+                //Kiểm tra xem hình ảnh có được chọn hay không và đặt giá trị cho tên hình ảnh
                 //print_r($_FILES['image']);
 
                 //die();//Break the Code Here
 
                 if(isset($_FILES['image']['name']))
                 {
-                    //Upload the Image
-                    //To upload image we need image name, source path and destination path
+                    //Tải lên hình ảnh
+                    //Để tải lên hình ảnh, chúng ta cần tên hình ảnh, đường dẫn nguồn và đường dẫn đích
                     $image_name = $_FILES['image']['name'];
                     
-                    // Upload the Image only if image is selected
+                    // Tải lên hình ảnh chỉ khi hình ảnh được chọn
                     if($image_name != "")
                     {
 
-                        //Auto Rename our Image
-                        //Get the Extension of our image (jpg, png, gif, etc) e.g. "specialfood1.jpg"
+                        //Tự động đổi tên hình ảnh của chúng tôi
+                        //Lấy phần mở rộng của hình ảnh của chúng tôi (jpg, png, gif, v.v.), ví dụ: "specialfood1.jpg"
                         $ext = end(explode('.', $image_name));
 
-                        //Rename the Image
+                        //Đổi tên hình ảnh
                         $image_name = "Food_Category_".rand(000, 999).'.'.$ext; // e.g. Food_Category_834.jpg
                         
 
@@ -127,18 +127,18 @@
 
                         $destination_path = "../images/category/".$image_name;
 
-                        //Finally Upload the Image
+                        // tải  hình ảnh 
                         $upload = move_uploaded_file($source_path, $destination_path);
 
-                        //Check whether the image is uploaded or not
-                        //And if the image is not uploaded then we will stop the process and redirect with error message
+                        //Kiểm tra xem hình ảnh có được tải lên hay không
+                        //Và nếu hình ảnh không được tải lên thì  sẽ dừng quá trình và chuyển hướng với thông báo lỗi
                         if($upload==false)
                         {
-                            //SEt message
+                           
                             $_SESSION['upload'] = "<div class='error'>Failed to Upload Image. </div>";
-                            //Redirect to Add CAtegory Page
+                            //Chuyển hướng đến Thêm Trang Danh mục
                             header('location:'.SITEURL.'admin/add-category.php');
-                            //STop the Process
+                            
                             die();
                         }
 
@@ -146,11 +146,11 @@
                 }
                 else
                 {
-                    //Don't Upload Image and set the image_name value as blank
+                    //Không tải lên hình ảnh và đặt giá trị image_name thành trống
                     $image_name="";
                 }
 
-                //2. Create SQL Query to Insert CAtegory into Database
+                //2. Tạo truy vấn SQL để chèn CAtegory vào cơ sở dữ liệu
                 $sql = "INSERT INTO tbl_category SET 
                     title='$title',
                     image_name='$image_name',
@@ -158,22 +158,22 @@
                     active='$active'
                 ";
 
-                //3. Execute the Query and Save in Database
+                //3. Thực thi Truy vấn và Lưu trong Cơ sở dữ liệu
                 $res = mysqli_query($conn, $sql);
 
-                //4. Check whether the query executed or not and data added or not
+                //4. Kiểm tra xem truy vấn có được thực thi hay không và dữ liệu được thêm vào hay không
                 if($res==true)
                 {
-                    //Query Executed and Category Added
+                    //Truy vấn được thực thi và danh mục được thêm vào
                     $_SESSION['add'] = "<div class='success'>Category Added Successfully.</div>";
-                    //Redirect to Manage Category Page
+                    //Chuyển hướng đến Quản lý Trang Danh mục
                     header('location:'.SITEURL.'admin/manage-category.php');
                 }
                 else
                 {
-                    //Failed to Add CAtegory
+                    //Không thể thêm CAtegory
                     $_SESSION['add'] = "<div class='error'>Failed to Add Category.</div>";
-                    //Redirect to Manage Category Page
+                    //Chuyển hướng đến Quản lý Trang Danh mục
                     header('location:'.SITEURL.'admin/add-category.php');
                 }
             }

@@ -52,7 +52,7 @@
         ?>
         <br><br>
 
-                <!-- Button to Add Admin -->
+                <!-- Nút để thêm quản trị viên -->
                 <a href="<?php echo SITEURL; ?>admin/add-category.php" class="btn-primary">Add Category</a>
 
                 <br /><br /><br />
@@ -69,23 +69,23 @@
 
                     <?php 
 
-                        //Query to Get all CAtegories from Database
+                        //Truy vấn để lấy tất cả các Danh mục từ Cơ sở dữ liệu
                         $sql = "SELECT * FROM tbl_category";
 
-                        //Execute Query
+                        //Thực hiện kiểm tra
                         $res = mysqli_query($conn, $sql);
 
                         //Count Rows
                         $count = mysqli_num_rows($res);
 
-                        //Create Serial Number Variable and assign value as 1
+                        //Tạo biến số sê-ri và gán giá trị là 1
                         $sn=1;
 
-                        //Check whether we have data in database or not
+                        //Kiểm tra xem chúng tôi có dữ liệu trong cơ sở dữ liệu hay không
                         if($count>0)
                         {
-                            //We have data in database
-                            //get the data and display
+                            // có dữ liệu trong cơ sở dữ liệu
+                            //lấy dữ liệu và hiển thị
                             while($row=mysqli_fetch_assoc($res))
                             {
                                 $id = $row['id'];
@@ -103,10 +103,10 @@
                                         <td>
 
                                             <?php  
-                                                //Chcek whether image name is available or not
+                                                //Kiểm tra xem tên hình ảnh có sẵn hay không
                                                 if($image_name!="")
                                                 {
-                                                    //Display the Image
+                                                    //Hiển thị hình ảnh
                                                     ?>
                                                     
                                                     <img src="<?php echo SITEURL; ?>images/category/<?php echo $image_name; ?>" width="100px" >
@@ -115,7 +115,7 @@
                                                 }
                                                 else
                                                 {
-                                                    //DIsplay the MEssage
+                                                    //Hiển thị tin nhắn
                                                     echo "<div class='error'>Image not Added.</div>";
                                                 }
                                             ?>
@@ -136,8 +136,8 @@
                         }
                         else
                         {
-                            //WE do not have data
-                            //We'll display the message inside table
+                            //không có dữ liệu
+                            // sẽ hiển thị thông báo bên trong bảng
                             ?>
 
                             <tr>

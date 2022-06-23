@@ -20,7 +20,7 @@
                     <?php 
                         //Sql Query 
                         $sql = "SELECT * FROM tbl_category";
-                        //Execute Query
+                        //Thực hiện kiểm tra
                         $res = mysqli_query($conn, $sql);
                         //Count Rows
                         $count = mysqli_num_rows($res);
@@ -36,7 +36,7 @@
                     <?php 
                         //Sql Query 
                         $sql2 = "SELECT * FROM tbl_food";
-                        //Execute Query
+                        //Thực hiện kiểm tra
                         $res2 = mysqli_query($conn, $sql2);
                         //Count Rows
                         $count2 = mysqli_num_rows($res2);
@@ -52,7 +52,7 @@
                     <?php 
                         //Sql Query 
                         $sql3 = "SELECT * FROM tbl_order";
-                        //Execute Query
+                        //Thực hiện kiểm tra
                         $res3 = mysqli_query($conn, $sql3);
                         //Count Rows
                         $count3 = mysqli_num_rows($res3);
@@ -66,17 +66,17 @@
                 <div class="col-4 text-center">
                     
                     <?php 
-                        //Creat SQL Query to Get Total Revenue Generated
-                        //Aggregate Function in SQL
+                        //Tạo truy vấn SQL để nhận Total Revenue Generated
+                        //Hàm tổng hợp trong SQL
                         $sql4 = "SELECT SUM(total) AS Total FROM tbl_order WHERE status='Delivered'";
 
-                        //Execute the Query
+                        //Thực thi truy vấn
                         $res4 = mysqli_query($conn, $sql4);
 
-                        //Get the VAlue
+                        //Lấy VAlue
                         $row4 = mysqli_fetch_assoc($res4);
                         
-                        //GEt the Total REvenue
+                        //Tính tổng doanh thu
                         $total_revenue = $row4['Total'];
 
                     ?>

@@ -1,21 +1,21 @@
 <?php include('partials/menu.php'); ?>
 
 <?php 
-    //CHeck whether id is set or not 
+    //Kiểm tra xem id đã được đặt hay chưa
     if(isset($_GET['id']))
     {
-        //Get all the details
+        //Nhận tất cả các chi tiết
         $id = $_GET['id'];
 
-        //SQL Query to Get the Selected Food
+        //Truy vấn SQL để lấy thực phẩm đã chọn
         $sql2 = "SELECT * FROM tbl_food WHERE id=$id";
-        //execute the Query
+        //thực hiện truy vấn
         $res2 = mysqli_query($conn, $sql2);
 
-        //Get the value based on query executed
+        //Nhận giá trị dựa trên truy vấn được thực thi
         $row2 = mysqli_fetch_assoc($res2);
 
-        //Get the Individual Values of Selected Food
+        //Nhận các giá trị riêng của thực phẩm đã chọn
         $title = $row2['title'];
         $description = $row2['description'];
         $price = $row2['price'];
@@ -27,7 +27,7 @@
     }
     else
     {
-        //Redirect to Manage Food
+        // Chuyển hướng đến Quản lý thực phẩm
         header('location:'.SITEURL.'admin/manage-food.php');
     }
 ?>
@@ -96,17 +96,17 @@
                     <select name="category">
 
                         <?php 
-                            //Query to Get ACtive Categories
+                            // Truy vấn để lấy danh mục ACtive
                             $sql = "SELECT * FROM tbl_category WHERE active='Yes'";
-                            //Execute the Query
+                           // Thực thi truy vấn
                             $res = mysqli_query($conn, $sql);
-                            //Count Rows
+                            //Đếm hàng
                             $count = mysqli_num_rows($res);
 
-                            //Check whether category available or not
+                            //Kiểm tra xem danh mục có sẵn hay không
                             if($count>0)
                             {
-                                //CAtegory Available
+                                //Danh mục có sẵn
                                 while($row=mysqli_fetch_assoc($res))
                                 {
                                     $category_title = $row['title'];
@@ -120,7 +120,7 @@
                             }
                             else
                             {
-                                //CAtegory Not Available
+                                //Danh mục không khả dụng
                                 echo "<option value='0'>Category Not Available.</option>";
                             }
 
@@ -165,7 +165,7 @@
             {
                 //echo "Button Clicked";
 
-                //1. Get all the details from the form
+                //1. Nhận tất cả các chi tiết từ form
                 $id = $_POST['id'];
                 $title = $_POST['title'];
                 $description = $_POST['description'];
@@ -176,24 +176,24 @@
                 $featured = $_POST['featured'];
                 $active = $_POST['active'];
 
-                //2. Upload the image if selected
+                //2. Tải lên hình ảnh nếu được chọn
 
-                //CHeck whether upload button is clicked or not
+                //Kiểm tra xem nút tải lên có được nhấp hay không
                 if(isset($_FILES['image']['name']))
                 {
                     //Upload BUtton Clicked
                     $image_name = $_FILES['image']['name']; //New Image NAme
 
-                    //CHeck whether th file is available or not
+                    //Kiểm tra xem tệp thứ có sẵn hay không
                     if($image_name!="")
                     {
                         //IMage is Available
-                        //A. Uploading New Image
+                        //A. Tải lên hình ảnh mới
 
-                        //REname the Image
-                        $ext = end(explode('.', $image_name)); //Gets the extension of the image
+                        //Đổi tên hình ảnh
+                        $ext = end(explode('.', $image_name)); //Nhận phần mở rộng của hình ảnh
 
-                        $image_name = "Food-Name-".rand(0000, 9999).'.'.$ext; //THis will be renamed image
+                        $image_name = "Food-Name-".rand(0000, 9999).'.'.$ext; //Nó sẽ được đổi tên hình ảnh
 
                         //Get the Source Path and DEstination PAth
                         $src_path = $_FILES['image']['tmp_name']; //Source Path
@@ -202,32 +202,32 @@
                         //Upload the image
                         $upload = move_uploaded_file($src_path, $dest_path);
 
-                        /// CHeck whether the image is uploaded or not
+                        /// Kiểm tra xem hình ảnh có được tải lên hay không
                         if($upload==false)
                         {
                             //FAiled to Upload
                             $_SESSION['upload'] = "<div class='error'>Failed to Upload new Image.</div>";
-                            //REdirect to Manage Food 
+                            //REdirect để quản lý thực phẩm
                             header('location:'.SITEURL.'admin/manage-food.php');
                             //Stop the Process
                             die();
                         }
-                        //3. Remove the image if new image is uploaded and current image exists
-                        //B. Remove current Image if Available
+                        //3.Xóa hình ảnh nếu hình ảnh mới được tải lên và hình ảnh hiện tại tồn tại
+                        //B. Xóa hình ảnh hiện tại nếu có
                         if($current_image!="")
                         {
-                            //Current Image is Available
+                            //Hình ảnh hiện tại có sẵn
                             //REmove the image
                             $remove_path = "../images/food/".$current_image;
 
                             $remove = unlink($remove_path);
 
-                            //Check whether the image is removed or not
+                            //Kiểm tra xem hình ảnh có bị xóa hay không
                             if($remove==false)
                             {
-                                //failed to remove current image
+                                //không thể xóa hình ảnh hiện tại
                                 $_SESSION['remove-failed'] = "<div class='error'>Faile to remove current image.</div>";
-                                //redirect to manage food
+                                //chuyển hướng để quản lý thực phẩm
                                 header('location:'.SITEURL.'admin/manage-food.php');
                                 //stop the process
                                 die();
@@ -236,17 +236,17 @@
                     }
                     else
                     {
-                        $image_name = $current_image; //Default Image when Image is Not Selected
+                        $image_name = $current_image; //Hình ảnh mặc định khi Hình ảnh không được chọn
                     }
                 }
                 else
                 {
-                    $image_name = $current_image; //Default Image when Button is not Clicked
+                    $image_name = $current_image; //Hình ảnh mặc định khi nút không được nhấp
                 }
 
                 
 
-                //4. Update the Food in Database
+                //4.Cập nhật thực phẩm trong cơ sở dữ liệu
                 $sql3 = "UPDATE tbl_food SET 
                     title = '$title',
                     description = '$description',
@@ -258,13 +258,13 @@
                     WHERE id=$id
                 ";
 
-                //Execute the SQL Query
+                //Thực thi truy vấn SQL
                 $res3 = mysqli_query($conn, $sql3);
 
-                //CHeck whether the query is executed or not 
+                //Kiểm tra xem truy vấn có được thực thi hay không
                 if($res3==true)
                 {
-                    //Query Exectued and Food Updated
+                    //Truy vấn được khám phá và cập nhật thực phẩm
                     $_SESSION['update'] = "<div class='success'>Food Updated Successfully.</div>";
                     header('location:'.SITEURL.'admin/manage-food.php');
                 }

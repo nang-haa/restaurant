@@ -48,41 +48,40 @@
 
 <?php 
 
-    //CHeck whether the Submit Button is Clicked or NOt
+    //Kiểm tra xem nút Gửi được Nhấp hay KHÔNG
     if(isset($_POST['submit']))
     {
-        //Process for Login
-        //1. Get the Data from Login form
-        // $username = $_POST['username'];
-        // $password = md5($_POST['password']);
+        //Quy trình đăng nhập
+        //1. Lấy dữ liệu từ biểu mẫu Đăng nhập
+       
         $username = mysqli_real_escape_string($conn, $_POST['username']);
         
-        $raw_password = md5($_POST['password']);
+        $raw_password = md5(md5($_POST['password']));
         $password = mysqli_real_escape_string($conn, $raw_password);
 
-        //2. SQL to check whether the user with username and password exists or not
+        //2. SQL để kiểm tra xem người dùng có tên người dùng và mật khẩu có tồn tại hay không
         $sql = "SELECT * FROM tbl_admin WHERE username='$username' AND password='$password'";
 
-        //3. Execute the Query
+        //3. Thực thi truy vấn
         $res = mysqli_query($conn, $sql);
 
-        //4. COunt rows to check whether the user exists or not
+        //4. đếm các hàng để kiểm tra xem người dùng có tồn tại hay không
         $count = mysqli_num_rows($res);
 
         if($count==1)
         {
-            //User AVailable and Login Success
+            //Người đã có và đăng nhập thành công
             $_SESSION['login'] = "<div class='success'>Login Successful.</div>";
-            $_SESSION['user'] = $username; //TO check whether the user is logged in or not and logout will unset it
+            $_SESSION['user'] = $username; //ĐỂ kiểm tra xem người dùng đã đăng nhập hay chưa và đăng xuất sẽ không đặt nó
 
-            //REdirect to HOme Page/Dashboard
+            // Sửa lại Trang / Bảng điều khiển HOme
             header('location:'.SITEURL.'admin/');
         }
         else
         {
-            //User not Available and Login FAil
+            //Người dùng không có sẵn và đăng nhập không có kết quả
             $_SESSION['login'] = "<div class='error text-center'>Username or Password did not match.</div>";
-            //REdirect to HOme Page/Dashboard
+            // Sửa lại Trang / Bảng điều khiển HOme
             header('location:'.SITEURL.'admin/login.php');
         }
 

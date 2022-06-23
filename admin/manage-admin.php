@@ -1,7 +1,7 @@
 <?php include('partials/menu.php'); ?>
 
 
-        <!-- Main Content Section Starts -->
+        <!-- Phần nội dung chính bắt đầu -->
         <div class="main-content">
             <div class="wrapper">
                 <h1>Manage Users</h1>
@@ -11,8 +11,8 @@
                 <?php 
                     if(isset($_SESSION['add']))
                     {
-                        echo $_SESSION['add']; //Displaying Session Message
-                        unset($_SESSION['add']); //REmoving Session Message
+                        echo $_SESSION['add']; //Hiển thị thông báo phiên
+                        unset($_SESSION['add']); //Điều chỉnh lại thông báo phiên
                     }
 
                     if(isset($_SESSION['delete']))
@@ -48,7 +48,7 @@
                 ?>
                 <br><br><br>
 
-                <!-- Button to Add Admin -->
+                <!-- Nút để thêm quản trị viên -->
                 <a href="add-admin.php" class="btn-primary">Add New User</a>
 
                 <br /><br /><br />
@@ -63,34 +63,34 @@
 
                     
                     <?php 
-                        //Query to Get all Admin
+                        //Truy vấn để nhận tất cả quản trị viên
                         $sql = "SELECT * FROM tbl_admin";
-                        //Execute the Query
+                        //Thực thi truy vấn
                         $res = mysqli_query($conn, $sql);
 
-                        //CHeck whether the Query is Executed of Not
+                        //Kiểm tra xem truy vấn có được thực thi hay không
                         if($res==TRUE)
                         {
-                            // Count Rows to CHeck whether we have data in database or not
-                            $count = mysqli_num_rows($res); // Function to get all the rows in database
+                            // Đếm hàng để kiểm tra xem chúng ta có dữ liệu trong cơ sở dữ liệu hay không
+                            $count = mysqli_num_rows($res); //Hàm lấy tất cả các hàng trong cơ sở dữ liệu
 
-                            $sn=1; //Create a Variable and Assign the value
+                            $sn=1; //Tạo một biến và chỉ định giá trị
 
-                            //CHeck the num of rows
+                            //Kiểm tra số lượng hàng
                             if($count>0)
                             {
-                                //WE HAve data in database
+                               
                                 while($rows=mysqli_fetch_assoc($res))
                                 {
-                                    //Using While loop to get all the data from database.
-                                    //And while loop will run as long as we have data in database
+                                    //Sử dụng vòng lặp While để lấy tất cả dữ liệu từ cơ sở dữ liệu.
+                                    //Và vòng lặp while sẽ chạy miễn là chúng ta có dữ liệu trong cơ sở dữ liệu
 
-                                    //Get individual DAta
+                                    //Nhận DAta cá nhân
                                     $id=$rows['id'];
                                     $full_name=$rows['full_name'];
                                     $username=$rows['username'];
 
-                                    //Display the Values in our Table
+                                    //Hiển thị các Giá trị trong Bảng 
                                     ?>
                                     
                                     <tr>
@@ -110,7 +110,7 @@
                             }
                             else
                             {
-                                //We Do not Have Data in Database
+                                // không có dữ liệu trong cơ sở dữ liệu
                             }
                         }
 

@@ -9,19 +9,19 @@
 
         <?php 
         
-            //Check whether the id is set or not
+            //Kiểm tra xem id đã được đặt hay chưa
             if(isset($_GET['id']))
             {
-                //Get the ID and all other details
+                //Nhận ID và tất cả các chi tiết khác
                 //echo "Getting the Data";
                 $id = $_GET['id'];
-                //Create SQL Query to get all other details
+                //Tạo Truy vấn SQL để nhận tất cả các chi tiết khác
                 $sql = "SELECT * FROM tbl_category WHERE id=$id";
 
-                //Execute the Query
+                //Thực thi truy vấn
                 $res = mysqli_query($conn, $sql);
 
-                //Count the Rows to check whether the id is valid or not
+                //Đếm các hàng để kiểm tra xem id có hợp lệ hay không
                 $count = mysqli_num_rows($res);
 
                 if($count==1)
@@ -35,7 +35,7 @@
                 }
                 else
                 {
-                    //redirect to manage category with session message
+                    // chuyển hướng để quản lý danh mục với thông báo phiên
                     $_SESSION['no-category-found'] = "<div class='error'>Category not Found.</div>";
                     header('location:'.SITEURL.'admin/manage-category.php');
                 }
@@ -43,7 +43,7 @@
             }
             else
             {
-                //redirect to Manage CAtegory
+                // chuyển hướng đến Quản lý danh mục
                 header('location:'.SITEURL.'admin/manage-category.php');
             }
         
@@ -72,7 +72,7 @@
                             }
                             else
                             {
-                                //Display Message
+                                // Hiển thị thông báo
                                 echo "<div class='error'>Image Not Added.</div>";
                             }
                         ?>
@@ -121,32 +121,32 @@
             if(isset($_POST['submit']))
             {
                 //echo "Clicked";
-                //1. Get all the values from our form
+                // 1. Nhận tất cả các giá trị từ biểu mẫu của chúng tôi
                 $id = $_POST['id'];
                 $title = $_POST['title'];
                 $current_image = $_POST['current_image'];
                 $featured = $_POST['featured'];
                 $active = $_POST['active'];
 
-                //2. Updating New Image if selected
-                //Check whether the image is selected or not
+                //2. Cập nhật hình ảnh mới nếu được chọn
+                //Kiểm tra xem hình ảnh đã được chọn hay chưa
                 if(isset($_FILES['image']['name']))
                 {
-                    //Get the Image Details
+                    //Nhận chi tiết hình ảnh
                     $image_name = $_FILES['image']['name'];
 
-                    //Check whether the image is available or not
+                    //Kiểm tra xem hình ảnh có sẵn hay không
                     if($image_name != "")
                     {
-                        //Image Available
+                        //Hình ảnh có sẵn
 
-                        //A. UPload the New Image
+                        //A. Tải lên hình ảnh mới
 
-                        //Auto Rename our Image
-                        //Get the Extension of our image (jpg, png, gif, etc) e.g. "specialfood1.jpg"
+                        //Tự động đổi tên hình ảnh của chúng tôi
+                        //Lấy phần mở rộng của hình ảnh của chúng tôi (jpg, png, gif, v.v.), ví dụ: "specialfood1.jpg"
                         $ext = end(explode('.', $image_name));
 
-                        //Rename the Image
+                        //Đổi tên hình ảnh
                         $image_name = "Food_Category_".rand(000, 999).'.'.$ext; // e.g. Food_Category_834.jpg
                         
 
@@ -154,33 +154,33 @@
 
                         $destination_path = "../images/category/".$image_name;
 
-                        //Finally Upload the Image
+                        //Cuối cùng tải lên hình ảnh
                         $upload = move_uploaded_file($source_path, $destination_path);
 
-                        //Check whether the image is uploaded or not
-                        //And if the image is not uploaded then we will stop the process and redirect with error message
+                        //Kiểm tra xem hình ảnh có được tải lên hay không
+                        //Và nếu hình ảnh không được tải lên thì chúng tôi sẽ dừng quá trình và chuyển hướng với thông báo lỗi
                         if($upload==false)
                         {
                             //SEt message
                             $_SESSION['upload'] = "<div class='error'>Failed to Upload Image. </div>";
-                            //Redirect to Add CAtegory Page
+                            //Chuyển hướng đến Thêm Trang Danh mục
                             header('location:'.SITEURL.'admin/manage-category.php');
                             //STop the Process
                             die();
                         }
 
-                        //B. Remove the Current Image if available
+                        //B. Xóa hình ảnh hiện tại nếu có
                         if($current_image!="")
                         {
                             $remove_path = "../images/category/".$current_image;
 
                             $remove = unlink($remove_path);
 
-                            //CHeck whether the image is removed or not
-                            //If failed to remove then display message and stop the processs
+                            //Kiểm tra xem hình ảnh có bị xóa hay không
+                            //Nếu không xóa được thì hiển thị thông báo và dừng quá trình
                             if($remove==false)
                             {
-                                //Failed to remove image
+                                //Không xóa được hình ảnh
                                 $_SESSION['failed-remove'] = "<div class='error'>Failed to remove current Image.</div>";
                                 header('location:'.SITEURL.'admin/manage-category.php');
                                 die();//Stop the Process
@@ -199,7 +199,7 @@
                     $image_name = $current_image;
                 }
 
-                //3. Update the Database
+                //3. Cập nhật cơ sở dữ liệu
                 $sql2 = "UPDATE tbl_category SET 
                     title = '$title',
                     image_name = '$image_name',
@@ -208,20 +208,20 @@
                     WHERE id=$id
                 ";
 
-                //Execute the Query
+                //Thực thi truy vấn
                 $res2 = mysqli_query($conn, $sql2);
 
-                //4. REdirect to Manage Category with MEssage
-                //CHeck whether executed or not
+                //4. Sửa lại để quản lý danh mục với MEssage
+                //Kiểm tra xem có được thực thi hay không
                 if($res2==true)
                 {
-                    //Category Updated
+                    //Đã cập nhật danh mục
                     $_SESSION['update'] = "<div class='success'>Category Updated Successfully.</div>";
                     header('location:'.SITEURL.'admin/manage-category.php');
                 }
                 else
                 {
-                    //failed to update category
+                    //không cập nhật được danh mục
                     $_SESSION['update'] = "<div class='error'>Failed to Update Category.</div>";
                     header('location:'.SITEURL.'admin/manage-category.php');
                 }

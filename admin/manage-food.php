@@ -6,7 +6,7 @@
 
         <br /><br />
 
-                <!-- Button to Add Admin -->
+                <!-- Nút để thêm quản trị viên -->
                 <a href="<?php echo SITEURL; ?>admin/add-food.php" class="btn-primary">Add Food</a>
 
                 <br /><br /><br />
@@ -56,25 +56,25 @@
                     </tr>
 
                     <?php 
-                        //Create a SQL Query to Get all the Food
+                        //Tạo một truy vấn SQL để nhận tất cả Food
                         $sql = "SELECT * FROM tbl_food";
 
-                        //Execute the qUery
+                        //Thực thi truy vấn
                         $res = mysqli_query($conn, $sql);
 
-                        //Count Rows to check whether we have foods or not
+                        // Đếm hàng để kiểm tra xem  có food hay không
                         $count = mysqli_num_rows($res);
 
-                        //Create Serial Number VAriable and Set Default VAlue as 1
+                        //Tạo số sê-ri VAriable và đặt VAlue mặc định là 1
                         $sn=1;
 
                         if($count>0)
                         {
-                            //We have food in Database
-                            //Get the Foods from Database and Display
+                            //có foood trong Cơ sở dữ liệu
+                            //Lấy Thực phẩm từ Cơ sở dữ liệu và Hiển thị
                             while($row=mysqli_fetch_assoc($res))
                             {
-                                //get the values from individual columns
+                                //lấy các giá trị từ các cột riêng lẻ
                                 $id = $row['id'];
                                 $title = $row['title'];
                                 $price = $row['price'];
@@ -89,15 +89,15 @@
                                     <td>$<?php echo $price; ?></td>
                                     <td>
                                         <?php  
-                                            //CHeck whether we have image or not
+                                            //Kiểm tra xem chúng tôi có hình ảnh hay không
                                             if($image_name=="")
                                             {
-                                                //WE do not have image, DIslpay Error Message
+                                                //CHÚNG TÔI không có hình ảnh, Thông báo lỗi DIslpay
                                                 echo "<div class='error'>Image not Added.</div>";
                                             }
                                             else
                                             {
-                                                //WE Have Image, Display Image
+                                                //có img và hiển thị img
                                                 ?>
                                                 <img src="<?php echo SITEURL; ?>images/food/<?php echo $image_name; ?>" width="100px">
                                                 <?php
@@ -117,7 +117,7 @@
                         }
                         else
                         {
-                            //Food not Added in Database
+                            //food không được thêm vào cơ sở dữ liệu
                             echo "<tr> <td colspan='7' class='error'> Food not Added Yet. </td> </tr>";
                         }
 
