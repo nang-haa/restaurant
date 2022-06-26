@@ -1,6 +1,6 @@
     <?php include('partials-front/menu.php'); ?>
 
-    <!-- fOOD sEARCH Section Starts Here -->
+    <!-- fOOD sEARCH  Starts-->
     <section class="food-search text-center">
         <div class="container">
             
@@ -11,7 +11,7 @@
 
         </div>
     </section>
-    <!-- fOOD sEARCH Section Ends Here -->
+    <!-- fOOD sEARCH Ends -->
 
     <?php 
         if(isset($_SESSION['order']))
@@ -21,17 +21,17 @@
         }
     ?>
 
-    <!-- CAtegories Section Starts Here -->
+    <!-- CAtegories Starts -->
     <section class="categories">
         <div class="container">
             <h2 class="text-center">Explore Foods</h2>
 
             <?php 
-                //Create SQL Query to Display CAtegories from Database
+                //Tạo truy vấn SQL để hiển thị các danh mục từ cơ sở dữ liệu
                 $sql = "SELECT * FROM tbl_category WHERE active='Yes' AND featured='Yes' LIMIT 3";
                 //Execute the Query
                 $res = mysqli_query($conn, $sql);
-                //Count rows to check whether the category is available or not
+                //Đếm hàng để kiểm tra xem danh mục có sẵn hay không
                 $count = mysqli_num_rows($res);
 
                 if($count>0)
@@ -82,18 +82,18 @@
             <div class="clearfix"></div>
         </div>
     </section>
-    <!-- Categories Section Ends Here -->
+    <!-- Categories Ends -->
 
 
 
-    <!-- fOOD MEnu Section Starts Here -->
+    <!-- fOOD MEnu Starts -->
     <section class="food-menu">
         <div class="container">
             <h2 class="text-center">Food Menu</h2>
 
             <?php 
             
-            //Getting Foods from Database that are active and featured
+            //Lấy Thực phẩm từ Cơ sở dữ liệu đang hoạt động và nổi bật
             //SQL Query
             $sql2 = "SELECT * FROM tbl_food WHERE active='Yes' AND featured='Yes' LIMIT 6";
 
@@ -174,7 +174,7 @@
             <a href="#">See All Foods</a>
         </p>
     </section>
-    <!-- fOOD Menu Section Ends Here -->
+    <!-- fOOD Menu Ends -->
 
     
     <?php include('partials-front/footer.php'); ?>

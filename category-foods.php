@@ -2,10 +2,10 @@
     <?php include('partials-front/menu.php'); ?>
 
     <?php 
-        //CHeck whether id is passed or not
+        //Kiểm tra xem id có được thông qua hay không
         if(isset($_GET['category_id']))
         {
-            //Category id is set and get the id
+            //Id danh mục được đặt và lấy id
             $category_id = $_GET['category_id'];
             // Get the CAtegory Title Based on Category ID
             $sql = "SELECT title FROM tbl_category WHERE id=$category_id";
@@ -27,7 +27,7 @@
     ?>
 
 
-    <!-- fOOD sEARCH Section Starts Here -->
+    <!-- fOOD sEARCH Starts -->
     <section class="food-search text-center">
         <div class="container">
             
@@ -35,18 +35,18 @@
 
         </div>
     </section>
-    <!-- fOOD sEARCH Section Ends Here -->
+    <!-- fOOD sEARCH Ends -->
 
 
 
-    <!-- fOOD MEnu Section Starts Here -->
+    <!-- fOOD MEnu Starts -->
     <section class="food-menu">
         <div class="container">
             <h2 class="text-center">Food Menu</h2>
 
             <?php 
             
-                //Create SQL Query to Get foods based on Selected CAtegory
+                //Tạo truy vấn SQL để lấy thực phẩm dựa trên Danh mục đã chọn
                 $sql2 = "SELECT * FROM tbl_food WHERE category_id=$category_id";
 
                 //Execute the Query
@@ -119,6 +119,6 @@
         </div>
 
     </section>
-    <!-- fOOD Menu Section Ends Here -->
+    <!-- fOOD Menu Ends -->
 
     <?php include('partials-front/footer.php'); ?>

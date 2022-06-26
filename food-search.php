@@ -1,13 +1,13 @@
 
     <?php include('partials-front/menu.php'); ?>
 
-    <!-- fOOD sEARCH Section Starts Here -->
+    <!-- fOOD sEARCH Starts -->
     <section class="food-search text-center">
         <div class="container">
             <?php 
 
-                //Get the Search Keyword
-                // $search = $_POST['search'];
+                //Lấy từ khóa tìm kiếm
+                
                 $search = mysqli_real_escape_string($conn, $_POST['search']);
             
             ?>
@@ -17,20 +17,19 @@
 
         </div>
     </section>
-    <!-- fOOD sEARCH Section Ends Here -->
+    <!-- fOOD sEARCH Ends -->
 
 
 
-    <!-- fOOD MEnu Section Starts Here -->
+    <!-- fOOD MEnu Starts -->
     <section class="food-menu">
         <div class="container">
             <h2 class="text-center">Food Menu</h2>
 
             <?php 
 
-                //SQL Query to Get foods based on search keyword
-                //$search = burger '; DROP database name;
-                // "SELECT * FROM tbl_food WHERE title LIKE '%burger'%' OR description LIKE '%burger%'";
+                //Truy vấn SQL để lấy thực phẩm dựa trên từ khóa tìm kiếm
+               
                 $sql = "SELECT * FROM tbl_food WHERE title LIKE '%$search%' OR description LIKE '%$search%'";
 
                 //Execute the Query
@@ -106,6 +105,6 @@
         </div>
 
     </section>
-    <!-- fOOD Menu Section Ends Here -->
+    <!-- fOOD Menu Ends -->
 
     <?php include('partials-front/footer.php'); ?>

@@ -2,22 +2,22 @@
 <?php include('partials-front/menu.php'); ?>
 
     <?php 
-        //CHeck whether food id is set or not
+        // Kiểm tra xem id thực phẩm đã được đặt hay chưa
         if(isset($_GET['food_id']))
         {
-            //Get the Food id and details of the selected food
+            //Nhận id Thức ăn và thông tin chi tiết về thức ăn đã chọn
             $food_id = $_GET['food_id'];
 
-            //Get the DEtails of the SElected Food
+            //Nhận thông tin chi tiết về thực phẩm đã chọn
             $sql = "SELECT * FROM tbl_food WHERE id=$food_id";
             //Execute the Query
             $res = mysqli_query($conn, $sql);
             //Count the rows
             $count = mysqli_num_rows($res);
-            //CHeck whether the data is available or not
+            //Kiểm tra xem dữ liệu có sẵn hay không
             if($count==1)
             {
-                //WE Have DAta
+                //Have DAta
                 //GEt the Data from Database
                 $row = mysqli_fetch_assoc($res);
 
@@ -39,7 +39,7 @@
         }
     ?>
 
-    <!-- fOOD sEARCH Section Starts Here -->
+    <!-- fOOD sEARCH Starts-->
     <section class="food-search">
         <div class="container">
             
@@ -52,7 +52,8 @@
                     <div class="food-menu-img">
                         <?php 
                         
-                            //CHeck whether the image is available or not
+                            //kiểm tra có hình ảnh không
+
                             if($image_name=="")
                             {
                                 //Image not Availabe
@@ -105,20 +106,18 @@
 
             <?php 
 
-                //CHeck whether submit button is clicked or not
+                //Kiểm tra xem nút gửi có được nhấp hay không
                 if(isset($_POST['submit']))
                 {
-                    // Get all the details from the form
-
+                    //Nhận tất cả các chi tiết từ biểu mẫu
                     $food = $_POST['food'];
                     $price = $_POST['price'];
                     $qty = $_POST['qty'];
+                    $total = $price * $qty; 
 
-                    $total = $price * $qty; // total = price x qty 
+                    $order_date = date("Y-m-d h:i:sa"); 
 
-                    $order_date = date("Y-m-d h:i:sa"); //Order DAte
-
-                    $status = "Ordered";  // Ordered, On Delivery, Delivered, Cancelled
+                    $status = "Ordered";  
 
                     $customer_name = $_POST['full-name'];
                     $customer_contact = $_POST['contact'];
@@ -126,8 +125,8 @@
                     $customer_address = $_POST['address'];
 
 
-                    //Save the Order in Databaase
-                    //Create SQL to save the data
+                    //Lưu đơn hàng trong Databaase
+                    //Tạo SQL để lưu dữ liệu
                     $sql2 = "INSERT INTO tbl_order SET 
                         food = '$food',
                         price = $price,
@@ -141,21 +140,19 @@
                         customer_address = '$customer_address'
                     ";
 
-                    //echo $sql2; die();
-
                     //Execute the Query
                     $res2 = mysqli_query($conn, $sql2);
 
-                    //Check whether query executed successfully or not
+                    //Kiểm tra xem truy vấn có được thực thi thành công hay không
                     if($res2==true)
                     {
-                        //Query Executed and Order Saved
+                       
                         $_SESSION['order'] = "<div class='success text-center'>Food Ordered Successfully.</div>";
                         header('location:'.SITEURL);
                     }
                     else
                     {
-                        //Failed to Save Order
+                       
                         $_SESSION['order'] = "<div class='error text-center'>Failed to Order Food.</div>";
                         header('location:'.SITEURL);
                     }
@@ -166,6 +163,6 @@
 
         </div>
     </section>
-    <!-- fOOD sEARCH Section Ends Here -->
+    <!-- fOOD sEARCH  End -->
 
     <?php include('partials-front/footer.php'); ?>

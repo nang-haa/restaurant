@@ -3,14 +3,14 @@
 
 
 
-    <!-- CAtegories Section Starts Here -->
+    <!-- Phần CAtegories bắt đầu tại đây -->
     <section class="categories">
         <div class="container">
             <h2 class="text-center">Explore Foods</h2>
 
             <?php 
 
-                //Display all the cateories that are active
+                //Hiển thị tất cả các danh mục đang hoạt động
                 //Sql Query
                 $sql = "SELECT * FROM tbl_category WHERE active='Yes'";
 
@@ -20,7 +20,7 @@
                 //Count Rows
                 $count = mysqli_num_rows($res);
 
-                //CHeck whether categories available or not
+                //Kiểm tra xem các danh mục có sẵn hay không
                 if($count>0)
                 {
                     //CAtegories Available
@@ -69,7 +69,7 @@
             <div class="clearfix"></div>
         </div>
     </section>
-    <!-- Categories Section Ends Here -->
+    <!-- Phần CAtegories Kết thúc Tại đây -->
 
 
     <?php include('partials-front/footer.php'); ?>

@@ -1,7 +1,7 @@
 
     <?php include('partials-front/menu.php'); ?>
 
-    <!-- fOOD sEARCH Section Starts Here -->
+    <!-- fOOD sEARCH Starts -->
     <section class="food-search text-center">
         <div class="container">
             
@@ -12,11 +12,11 @@
 
         </div>
     </section>
-    <!-- fOOD sEARCH Section Ends Here -->
+    <!-- fOOD sEARCH Ends -->
 
 
 
-    <!-- fOOD MEnu Section Starts Here -->
+    <!-- fOOD MEnu Starts -->
     <section class="food-menu">
         <div class="container">
             <h2 class="text-center">Food Menu</h2>
@@ -98,6 +98,6 @@
         </div>
 
     </section>
-    <!-- fOOD Menu Section Ends Here -->
+    <!-- fOOD Menu Ends -->
 
     <?php include('partials-front/footer.php'); ?>
